@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% block title %}News & Alerts{% endblock %}
+
+{% block content %}
+<style>
+  .news-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 1.5rem 2rem 3rem 2rem;
+    background: rgba(18, 24, 33, 0.95);
+    border-radius: 18px;
+    box-shadow: 0 14px 36px rgba(25, 255, 147, 0.40);
+    color: #19ff93;
+    font-family: 'Poppins', sans-serif;
+  }
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    font-size: 2.9rem;
+    color: #19ff93;
+    text-shadow: 0 0 10px #19ff93e0;
+  }
+  .featured-news {
+    background: linear-gradient(45deg,#19ff93 0%,#121821 100%);
+    border-radius: 14px;
+    margin-bottom: 2rem;
+    color: #17172b;
+    box-shadow: 0 0 18px 4px #19ff9320;
+    padding: 1.3rem 1.1rem;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-news h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #121821;
+    margin-bottom: 8px;
+  }
+  .stock-facts-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    margin-bottom: 2.4rem;
+  }
+  .fact-card {
+    flex: 1 1 200px;
+    background: rgba(29,232,117,0.18);
+    border-radius: 13px;
+    padding: 13px 15px;
+    color: #fff;
+    text-align: left;
+    font-size: 1.07rem;
+    box-shadow: 0 6px 18px #19ff9324;
+  }
+  .fact-label {
+    color: #19ff93;
+    font-weight: 700;
+    margin-right: 6px;
+    font-size: 1.04rem;
+  }
+  .quote-block {
+    background: rgba(25,255,147,.13);
+    border-left: 4px solid #19ff93;
+    border-radius: 13px;
+    padding: 12px 20px;
+    font-size: 1.09rem;
+    color: #fff;
+    margin-bottom: 18px;
+    font-style: italic;
+    box-shadow: 0 0 10px #19ff932a;
+  }
+  .news-articles-list {
+    margin-bottom: 2rem;
+  }
+  .news-article {
+    background: #121821;
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s;
+    box-shadow: 0 0 14px #19ff9340;
+    cursor: pointer;
+  }
+  .news-article:hover {
+    box-shadow: 0 0 40px #19ff93b0;
+  }
+  .news-title {
+    font-weight: 700;
+    font-size: 1.23rem;
+    margin-bottom: 8px;
+    color: #e7ffd7;
+  }
+  .news-date {
+    font-size: 0.93rem;
+    color: #59f2ae;
+    margin-bottom: 8px;
+  }
+  .news-summary {
+    font-size: 1.09rem;
+    color: #a7f6be;
+  }
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(340px, 1fr));
+    gap: 3rem;
+  }
+  .chart-card {
+    background: #121821;
+    border-radius: 13px;
+    padding: 20px;
+    box-shadow: 0 10px 30px #19ff9340;
+    color: #a1f7c3;
+  }
+  .chart-card h4 {
+    margin-bottom: 1rem;
+    color: #19ff93;
+    font-weight: 600;
+  }
+</style>
+
+<div class="news-container">
+  <h2>Market News & Alerts</h2>
+
+  <div class="featured-news">
+    <h3>Featured: Tech leads historic rally in Indian markets</h3>
+    <p><b>Date:</b> Sept 27, 2025 | <b>Time:</b> 11:05 AM</p>
+    <p>
+      The Indian stock market hit a record high as technology stocks soared, driven by robust results and positive investor sentiment.
+      Experts point to innovation and global demand for tech as key drivers.
+    </p>
+  </div>
+
+  <div class="stock-facts-cards">
+    <div class="fact-card"><span class="fact-label">Nifty 50:</span> +1.78% (last 24h)</div>
+    <div class="fact-card"><span class="fact-label">Top Gainer:</span> Zenith Ltd.<span style="color:#19ff93;"> (+6.2%)</span></div>
+    <div class="fact-card"><span class="fact-label">Sector Alert:</span> Healthcare sees highest volatility</div>
+    <div class="fact-card"><span class="fact-label">Currency Watch:</span> INR stable vs USD</div>
+  </div>
+
+  <div class="quote-block">
+    “Innovation and investor confidence have propelled the tech sector upward, setting the tone for broader market performance.”<br>
+    <span style="font-size:0.97rem;">— R. Mehra, Senior Market Analyst</span>
+  </div>
+
+  <div class="news-articles-list">
+    <div class="news-article" tabindex="0">
+      <div class="news-title">Energy Stocks Rebound Amid Policy Updates</div>
+      <div class="news-date">Sept 27, 2025 | 9:45 AM</div>
+      <div class="news-summary">Revised energy policies triggered a recovery in energy, with gas/oil majors posting moderate gains.</div>
+    </div>
+    <div class="news-article" tabindex="0">
+      <div class="news-title">Banking Stocks Hit By Rate Action Speculation</div>
+      <div class="news-date">Sept 27, 2025 | 9:15 AM</div>
+      <div class="news-summary">
+        Banks traded lower after speculation of an imminent interest rate hike, which may slow lending growth in Q4.
+      </div>
+    </div>
+    <div class="news-article" tabindex="0">
+      <div class="news-title">Healthcare Faces Mixed Sentiment Post Results</div>
+      <div class="news-date">Sept 27, 2025 | 8:50 AM</div>
+      <div class="news-summary">
+        Mixed results among pharma giants led to industry-wide volatility, with both sharp gains and losses today.
+      </div>
+    </div>
+    <div class="news-article" tabindex="0">
+      <div class="news-title">Global Sentiment Remains Cautious</div>
+      <div class="news-date">Sept 27, 2025 | 8:30 AM</div>
+      <div class="news-summary">
+        Global indices remain cautious following US interest rate speculation. Analysts expect volatility in coming weeks.
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h4>Market Sentiment Overview</h4>
+      <canvas id="marketSentimentChart" width="340" height="230"></canvas>
+    </div>
+    <div class="chart-card">
+      <h4>Stock Price Volatility</h4>
+      <canvas id="stockVolatilityChart" width="340" height="230"></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const sentimentCtx = document.getElementById('marketSentimentChart').getContext('2d');
+new Chart(sentimentCtx, {
+ type: 'pie',
+ data: {
+ labels: ['Positive', 'Neutral', 'Negative'],
+ datasets: [{
+ label: 'Sentiment',
+ data: [60, 25, 15],
+ backgroundColor: ['#19ff93', '#84bfab', '#d84747'],
+ borderWidth: 1,
+ borderColor: '#0d1117'
+ }]
+ },
+ options: {
+ responsive: true,
+ plugins: {legend: {labels:{color:'#19ff93'}}}
+ }
+ });
+
+
+ const volatilityCtx = document.getElementById('stockVolatilityChart').getContext('2d');
+ new Chart(volatilityCtx, {
+ type: 'bar',
+ data: {
+ labels: ['Tech', 'Finance', 'Energy', 'Healthcare', 'Utilities'],
+ datasets: [{
+ label: 'Volatility %',
+ data: [5, 8, 3, 10, 2],
+ backgroundColor: '#19ff93'
+ }]
+ },
+ options: {
+ responsive: true,
+ scales: {
+ x: { grid: {color: '#222'}, ticks: {color: '#ccc'} },
+ y: { grid: {color: '#222'}, ticks: {color: '#ccc'} }
+ },
+ plugins: {legend: {labels:{color:'#19ff93'}}}
+ }
+ });
+</script>
+{% endblock %}

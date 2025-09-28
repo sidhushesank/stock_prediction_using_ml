@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}Stock Market App{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='custom.css') }}" rel="stylesheet"/>
+</head>
+<body style="background: #101820;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url_for('main.home') }}">Stock Market App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.predict') }}">Prediction</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.stocks_table') }}">Stocks Table</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.analytics') }}">Analytics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.news') }}">News & Alerts</a></li>
+                    {% if session.logged_in %}
+                    <li class="nav-item dropdown ms-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('main.logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container mt-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <style>
+        .footer {
+            background: #121821;
+            color: #19ff93;
+            padding: 30px 20px;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            border-top: 1px solid #1de87555;
+            box-shadow: inset 0 10px 30px -10px #19ff93cc;
+            margin-top: 50px;
+        }
+        .footer .contact-info {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            letter-spacing: 0.7px;
+        }
+        .footer .contact-info a {
+            color: #19ff93;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .footer .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .footer .copyright {
+            font-size: 0.9rem;
+            color: #0d1117;
+            background: #19ff93;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            box-shadow: 0 5px 15px #19ff936e;
+            user-select: none;
+        }
+    </style>
+
+    <footer class="footer">
+        <div class="contact-info">
+            Created by <strong>Sheshank Sidheshwar</strong> • Email: 
+            <a href="mailto:sidhusheshank@gmail.com">sidhusheshank@gmail.com</a> • Phone: <a href="tel:+917842638157">7842638157</a>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Sheshank Sidheshwar. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

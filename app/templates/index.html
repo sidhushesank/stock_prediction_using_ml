@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Stock Price Prediction{% endblock %}
+
+{% block content %}
+<style>
+  /* Background image covering entire viewport */
+  .prediction-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 0;
+    background: url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/906a8a8f-c6bd-4a9e-af24-a7ae6d965fd2.png') no-repeat center center/cover;
+    opacity: 0.28;
+    pointer-events: none;
+  }
+  /* Main card with translucent background and shadows to stand out */
+  .prediction-card {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 40px auto 60px auto;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 12px 32px rgba(25, 255, 147, 0.18), 0 0 30px #19ff9377;
+    border-radius: 20px;
+    padding: 36px 30px 24px 30px;
+  }
+</style>
+
+<div class="prediction-bg"></div>
+
+<div class="prediction-card shadow-sm">
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger btn-sm">Logout</a>
+    </div>
+
+    <h2 class="text-center mb-4">Stock Price Prediction</h2>
+
+    <form method="POST" action="/predict">
+        <div class="mb-3">
+            <label for="close_price" class="form-label">Enter Today's Close Price</label>
+            <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="close_price"
+                name="close_price"
+                required
+                value="{{ close_price if close_price else '' }}"
+            >
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Predict Next Day's Price</button>
+    </form>
+
+    {% if prediction %}
+    <div class="alert alert-success mt-4 text-center" role="alert">
+        <strong>Predicted Next Day Close Price: </strong> {{ prediction | round(2) }}
+    </div>
+    {% endif %}
+
+    <!-- Chart container -->
+    <canvas id="predictionChart" width="400" height="300" class="mt-4"></canvas>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('predictionChart').getContext('2d');
+
+    const labels = ['Close Day -4', 'Close Day -3', 'Close Day -2', 'Close Day -1', "Today's Close", "Predicted Next"];
+    const closePrices = [147, 149, 148, 150, {{ close_price if close_price else 150 }}];
+    const predictedPrices = [null, null, null, null, null, {{ prediction | round(2) if prediction else 152 }}];
+
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Close Price',
+                data: closePrices,
+                borderColor: 'blue',
+                backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                fill: false,
+                tension: 0.3
+            }, {
+                label: 'Predicted Price',
+                data: predictedPrices,
+                borderColor: 'green',
+                backgroundColor: 'rgba(0, 128, 0, 0.1)',
+                fill: false,
+                borderDash: [5, 5],
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'Stock Price Prediction Chart' }
+            },
+            scales: {
+                y: { beginAtZero: false }
+            }
+        }
+    });
+</script>
+{% endblock %}

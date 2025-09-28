@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(135deg, #0d1117 20%, #161b22 80%);
+  }
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background: url('https://user-gen-media-assets.s3.amazonaws.com/seedream_images/306bf0a9-2383-4aac-bd3d-210a9944c355.png') no-repeat center center/cover;
+    border-radius: 15px;
+    margin-bottom: 3rem;
+    box-shadow: 0 5px 30px rgba(25, 255, 147, 0.4);
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(25, 255, 147, 0.35);
+    border-radius: 15px;
+  }
+  .hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #0d1117;
+    font-weight: 700;
+    font-size: 2.8rem;
+    text-shadow: none;
+    text-align: center;
+  }
+  .dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .card-dashboard {
+    background: rgba(18, 24, 33, 0.85);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(25, 255, 147, 0.3);
+    color: #19ff93;
+    font-family: 'Poppins', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    position: relative;
+  }
+  .card-dashboard:hover {
+    transform: translateY(-12px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(25, 255, 147, 0.7), 0 0 16px 3px #19ff93aa;
+    z-index: 10;
+  }
+  .card-dashboard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    box-shadow: 0 0 30px 7px #19ff936e;
+    z-index: -1;
+  }
+  .card-dashboard:hover::before {
+    opacity: 1;
+  }
+  .card-icon {
+    font-size: 44px;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 8px #19ff93aa);
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+  .card-title {
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+  .card-text {
+    font-size: 1rem;
+    color: #a1f7c3;
+  }
+  .chart-container {
+    width: 45%;
+    display: inline-block;
+    margin: 2rem 1.5rem;
+    background: #121821;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+  }
+</style>
+
+<div class="container mt-5">
+
+  <div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      Welcome to Indian Stock Market App!
+      <p style="font-weight: 400; font-size: 1.25rem; margin-top:10px;">
+        Navigate the navbar to explore features.
+      </p>
+    </div>
+  </div>
+
+  <div class="dashboard-cards">
+    <div class="card-dashboard">
+      <div class="card-icon">📈</div>
+      <div class="card-title">Real-Time Market Analysis</div>
+      <div class="card-text">
+        Get real-time updates on market trends and stock performances for informed decisions.
+      </div>
+    </div>
+
+    <div class="card-dashboard">
+      <div class="card-icon">🔮</div>
+      <div class="card-title">Accurate Price Predictions</div>
+      <div class="card-text">
+        Leverage advanced machine learning to forecast stock price movements effectively.
+      </div>
+    </div>
+
+    <div class="card-dashboard">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Interactive Analytics</div>
+      <div class="card-text">
+        Explore detailed charts and data visualizations to grasp market dynamics easily.
+      </div>
+    </div>
+
+    <div class="card-dashboard">
+      <div class="card-icon">📰</div>
+      <div class="card-title">Latest News & Alerts</div>
+      <div class="card-text">
+        Stay updated with breaking news and alerts impacting stock markets.
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center flex-wrap mt-5">
+    <div class="chart-container">
+      <h4 style="color:#19ff93; margin-bottom: 0.5rem;">Market Trend Example</h4>
+      <canvas id="marketTrendChart" width="300" height="200"></canvas>
+    </div>
+    <div class="chart-container">
+      <h4 style="color:#19ff93; margin-bottom: 0.5rem;">Stock Price Prediction</h4>
+      <canvas id="stockPredictionChart" width="300" height="200"></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Chart: Market Trend
+  const ctxTrend = document.getElementById('marketTrendChart').getContext('2d');
+  const marketTrendChart = new Chart(ctxTrend, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+      datasets: [{
+        label: 'Nifty 50',
+        data: [17500, 17700, 17620, 17850, 17900],
+        borderColor: '#1de875',
+        backgroundColor: 'rgba(29, 232, 117, 0.3)',
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      scales: {
+        x: { grid: { color: '#222' }, ticks: { color: '#ccc' } },
+        y: { grid: { color: '#222' }, ticks: { color: '#ccc' } }
+      },
+      plugins: {
+        legend: { labels: { color: '#19ff93' } }
+      },
+      responsive: false,
+      maintainAspectRatio: false
+    }
+  });
+
+  // Chart: Stock Price Prediction
+  const ctxPrediction = document.getElementById('stockPredictionChart').getContext('2d');
+  const stockPredictionChart = new Chart(ctxPrediction, {
+    type: 'bar',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+      datasets: [{
+        label: 'Predicted Close Price',
+        data: [150, 152, 155, 154, 156],
+        backgroundColor: '#19ff93'
+      }]
+    },
+    options: {
+      scales: {
+        x: { grid: { color: '#222' }, ticks: { color: '#ccc' } },
+        y: { grid: { color: '#222' }, ticks: { color: '#ccc' } }
+      },
+      plugins: {
+        legend: { labels: { color:'#19ff93' } }
+      },
+      responsive: false,
+      maintainAspectRatio: false
+    }
+  });
+</script>
+{% endblock %}

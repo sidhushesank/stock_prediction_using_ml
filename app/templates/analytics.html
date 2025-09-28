@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}Market Analytics{% endblock %}
+
+{% block content %}
+<style>
+  .analytics-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 1rem 1.5rem 3rem 1.5rem;
+    background: rgba(18, 24, 33, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(25, 255, 147, 0.35);
+    color: #19ff93;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .kpi-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .kpi-card {
+    flex: 1 1 160px;
+    background: rgba(29, 232, 117, 0.15);
+    border-radius: 14px;
+    padding: 1.2rem 1rem;
+    color: #fff; /* changed to white for visibility */
+    font-weight: 700;
+    font-size: 1.4rem;
+    text-align: center;
+    box-shadow: 0 0 10px #19ff93aa;
+    transition: transform 0.3s ease;
+  }
+  .kpi-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 22px 3px #19ff93cc;
+  }
+  .kpi-card strong {
+    color: #19ff93;
+  }
+  .kpi-label {
+    font-size: 0.85rem;
+    color: #c7f7db; /* more vibrant */
+    margin-top: 0.25rem;
+    font-weight: 600;
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    font-size: 2.8rem;
+    color: #19ff93;
+    text-shadow: 0 0 8px #19ff93d3;
+  }
+
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(340px, 1fr));
+    gap: 3rem;
+  }
+
+  .chart-card {
+    background: #121821;
+    border-radius: 13px;
+    padding: 20px;
+    box-shadow: 0 10px 30px #19ff9340;
+    color: #a1f7c3;
+  }
+
+  .chart-card h4 {
+    margin-bottom: 1rem;
+    color: #19ff93;
+    font-weight: 600;
+  }
+</style>
+
+<div class="analytics-container">
+  <h2>Market Growth & Analytics</h2>
+
+  <div class="kpi-cards">
+    <div class="kpi-card">
+      <strong>13.6K</strong> <span class="kpi-label">Active Stocks</span>
+    </div>
+    <div class="kpi-card">
+      <strong>₹125.4K Cr</strong> <span class="kpi-label">Market Cap</span>
+    </div>
+    <div class="kpi-card">
+      <strong>+2.67%</strong> <span class="kpi-label">Daily Growth</span>
+    </div>
+    <div class="kpi-card">
+      <strong>23.1M</strong> <span class="kpi-label">Trades Today</span>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h4>Weekly Market Index Trend</h4>
+      <canvas id="weeklyIndexChart" width="340" height="230"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h4>Sector Wise Performance</h4>
+      <canvas id="sectorPerformanceChart" width="340" height="230"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h4>Market Volume Distribution</h4>
+      <canvas id="marketVolumeChart" width="340" height="230"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h4>Top Gainers & Losers</h4>
+      <canvas id="gainersLosersChart" width="340" height="230"></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const weeklyIndexCtx = document.getElementById('weeklyIndexChart').getContext('2d');
+  new Chart(weeklyIndexCtx, {
+    type: 'line',
+    data: {
+      labels: ['Mon','Tue','Wed','Thu','Fri'],
+      datasets: [{
+        label: 'Nifty 50',
+        data: [17450, 17680, 17620, 17750, 17800],
+        borderColor: '#1de875',
+        backgroundColor: 'rgba(29, 232, 117, 0.3)',
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: { grid: {color: '#222'}, ticks: {color: '#ccc'} },
+        y: { grid: {color: '#222'}, ticks: {color: '#ccc'} }
+      },
+      plugins: {legend: {labels:{color:'#19ff93'}}}
+    }
+  });
+
+  const sectorPerformanceCtx = document.getElementById('sectorPerformanceChart').getContext('2d');
+  new Chart(sectorPerformanceCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Tech', 'Finance', 'Energy', 'Healthcare', 'Consumer Goods'],
+      datasets: [{
+        label: 'Performance %',
+        data: [4, 3, -1, 2.5, 1.8],
+        backgroundColor: '#19ff93'
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {grid:{color:'#222'}, ticks:{color:'#ccc'}},
+        y: {grid:{color:'#222'}, ticks:{color:'#ccc'}}
+      },
+      plugins: {legend: {labels:{color:'#19ff93'}}}
+    }
+  });
+
+  const marketVolumeCtx = document.getElementById('marketVolumeChart').getContext('2d');
+  new Chart(marketVolumeCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Stock A', 'Stock B', 'Stock C', 'Stock D', 'Stock E'],
+      datasets: [{
+        label: 'Volume',
+        data: [3000, 1500, 2000, 1200, 1800],
+        backgroundColor: ['#19ff93', '#148B64', '#2ECC71', '#35d08e', '#0e6435']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {legend: {labels:{color:'#19ff93'}}}
+    }
+  });
+
+  const gainersLosersCtx = document.getElementById('gainersLosersChart').getContext('2d');
+  new Chart(gainersLosersCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Top Gainers', 'Top Losers'],
+      datasets: [{
+        label: 'Counts',
+        data: [12, 7],
+        backgroundColor: ['#19ff93', '#d84747']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {legend: {labels:{color:'#19ff93'}}}
+    }
+  });
+</script>
+{% endblock %}
