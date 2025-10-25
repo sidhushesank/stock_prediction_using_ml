@@ -16,19 +16,22 @@ def predict():
     return render_template('index.html', prediction=prediction, close_price=close_price)
 
 
-
 @main_bp.route('/logout')
 def logout():
     session.pop('logged_in', None)
     flash("You have been logged out.")
     return redirect(url_for('main.login'))
 
-@main_bp.route('/')
+
+# HOME ROUTE - Changed from '/' to '/home'
+@main_bp.route('/home')  # ← Changed this!
+@login_required  # ← Added this to require login
 def home():
     return render_template('home.html')
 
 
 @main_bp.route('/stocks')
+@login_required
 def stocks_table():
     stock_names = [
         "ApexTech", "Maxion", "Genexis", "Quantica", "Triton", "Vortex", "Synergix", "Lumina", "Novaris", "Zenith",
@@ -37,7 +40,6 @@ def stocks_table():
     ]
     
     companies = [
-        # your existing 30 companies
         "Pinnacle Solutions", "Crystal Dynamics", "NovaTech Industries", "BrightHome Electronics",
         "Vertex Innovations", "CyberNet Software", "Zenexa Systems", "Rhythm Microsystems",
         "Falcon Solar", "Quantum Net Services", "Prism Data Analytics", "Horizon Logistics",
@@ -75,9 +77,12 @@ def stocks_table():
 
 
 @main_bp.route('/analytics')
+@login_required
 def analytics():
     return render_template('analytics.html')
 
+
 @main_bp.route('/news')
+@login_required
 def news():
     return render_template('news.html')
