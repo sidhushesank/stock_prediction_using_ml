@@ -1,0 +1,11 @@
+gunicorn==21.2.0
+Flask==3.0.0
+Flask-Login==0.6.3
+pandas
+numpy
+scikit-learn
+yfinance
+alpha_vantage
+requests
+plotly
+python-dotenv
