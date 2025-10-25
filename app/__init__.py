@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from app.extensions import login_manager
+
 
 def create_app():
     app = Flask(__name__)
@@ -12,5 +13,10 @@ def create_app():
     from app.routes.main import main_bp
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
+    
+    # Root route - redirects to login
+    @app.route('/')
+    def index():
+        return redirect('/login')
     
     return app
