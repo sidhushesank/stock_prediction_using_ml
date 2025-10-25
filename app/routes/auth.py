@@ -20,7 +20,7 @@ def login():
         user = User.validate(username, password)
         if user:
             login_user(user)
-            return redirect(url_for('main.predict'))
+            return redirect(url_for('main.home'))  # ← Changed from main.predict to main.home
         flash('Invalid credentials', 'danger')
     return render_template('login.html')
 
