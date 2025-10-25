@@ -5,6 +5,13 @@ from app.models.user import User
 
 auth_bp = Blueprint('auth', __name__)
 
+
+# Root route - redirects to login page
+@auth_bp.route('/')
+def index():
+    return redirect(url_for('auth.login'))
+
+
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -17,9 +24,9 @@ def login():
         flash('Invalid credentials', 'danger')
     return render_template('login.html')
 
+
 @auth_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
- 
